@@ -6,7 +6,6 @@ function filesOrganizer() {
 
 function createDir() {
     const filesInput = document.getElementById('files')
-    // console.log(filesInput.files)
     const folderName = '/users/alonjoshua/desktop/image-organizer';
 
     try {
@@ -17,13 +16,27 @@ function createDir() {
         console.error(err);
     }
     [...filesInput.files].forEach(file => {
-        console.log(file.path);
-        try {
-            fs.copyFile(file.path, folderName, { overwrite: true })
-            console.log('success!')
-          } catch (err) {
-            console.error(err)
-          }
+        const fileDate = new Date(fs.statSync(file.path).birthtimeMs);
+        const fileMonth = fileDate.toLocaleString('default', { month: 'long' });
+        console.log(folderName);
+
+        // get file year
+        // check if year exists in the folder
+        // if not, create, else enter that folder
+        // check if month is exists in the year folder
+        // if not, create, else enter that folder
+        // check which week is in that month, (week folder name should be like "03/02 - 10/02")
+        // if week folder not exists, create, else enter that folder
+        // create the file
+
+        // try {
+        //     fs.copyFile(file.path, `${folderName}/${file.name}`, (error) => {
+        //        console.log(error); 
+        //     })
+        //     console.log('success!')
+        // } catch (err) {
+        //     console.error(err)
+        // }
     });
     // fs.readdir(filesInput, (err, files) => {
     //     if (err) {
