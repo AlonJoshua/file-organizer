@@ -2,14 +2,16 @@
 File Organizer is a local media and data management tool that helps you keep your files organized on your computer. It is designed for people who prefer to manage their media and data locally, without relying on cloud storage.
 
 ### Features
-Organize your files by date.
+Organize your files by date (years, months and weeks folders).
 
 ### Getting Started
 To get started with File Organizer, follow these simple steps:
 
 Download and install File Organizer on your computer
 Launch the application and select the folders you want to organize
+
 Enjoy a clutter-free and organized file system on your computer!
+
 ### Contributing
 We welcome contributions from anyone who wants to help improve File Organizer. To contribute, follow these steps:
 
