@@ -1,54 +1,42 @@
 const fs = window.myAPI.fs;
 
-function filesOrganizer() {
-    console.log('test')
-}
+document.addEventListener('DOMContentLoaded', () => {
+    const submitOrganizer = document.getElementById('submit-organizer');
+    submitOrganizer.addEventListener('click', createDir);
+})
 
 function createDir() {
     const filesInput = document.getElementById('files')
-    const folderName = '/users/alonjoshua/desktop/image-organizer';
-
+    const mainFolderPath = '/users/alonjoshua/desktop/image-organizer';
     try {
-        if (!fs.existsSync(folderName)) {
-            fs.mkdirSync(folderName);
+        if (!fs.existsSync(mainFolderPath)) {
+            fs.mkdirSync(mainFolderPath);
         }
     } catch (err) {
         console.error(err);
     }
     [...filesInput.files].forEach(file => {
         const fileDate = new Date(fs.statSync(file.path).birthtimeMs);
-        const fileMonth = fileDate.toLocaleString('default', { month: 'long' });
-        console.log(folderName);
+        const yearFolderPath = `${mainFolderPath}/${fileDate.getFullYear()}`;
+        if (!fs.existsSync(yearFolderPath)) {
+            fs.mkdirSync(yearFolderPath);
+        }
+        const monthFolderPath = `${yearFolderPath}/${fileDate.toLocaleString('default', { month: 'long' })}`;
+        if (!fs.existsSync(monthFolderPath)) {
+            fs.mkdirSync(monthFolderPath);
+        }
+        const weekFolderPath = `${monthFolderPath}/week ${Math.ceil((fileDate.getDate()) / 7)}`;
+        if (!fs.existsSync(weekFolderPath)) {
+            fs.mkdirSync(weekFolderPath);
+        }
 
-        // get file year
-        // check if year exists in the folder
-        // if not, create, else enter that folder
-        // check if month is exists in the year folder
-        // if not, create, else enter that folder
-        // check which week is in that month, (week folder name should be like "03/02 - 10/02")
-        // if week folder not exists, create, else enter that folder
-        // create the file
-
-        // try {
-        //     fs.copyFile(file.path, `${folderName}/${file.name}`, (error) => {
-        //        console.log(error); 
-        //     })
-        //     console.log('success!')
-        // } catch (err) {
-        //     console.error(err)
-        // }
+        try {
+            fs.copyFile(file.path, `${weekFolderPath}/${file.name}`, (error) => {
+               console.log(error); 
+            })
+            console.log('success!')
+        } catch (err) {
+            console.error(err)
+        }
     });
-    // fs.readdir(filesInput, (err, files) => {
-    //     if (err) {
-    //         console.error(err)
-    //         return
-    //     }
-        
-    // }) 
 }
-
-// async function getDir() {
-//     const dirHandle = await window.showDirectoryPicker();
-//     console.log(dirHandle.getDirectoryHandle());
-    // run code for dirHandle
-//   }
