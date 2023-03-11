@@ -2,15 +2,26 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>Hello World!</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>File organizer</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="index.css" />
   </head>
-  <body>
-    <h1>💖 Hello World!</h1>
-    <p>Welcome to your Electron application.</p>
+  <body class="container has-text-centered">
+    <h1 class="level is-justify-content-center">File organizer</h1>
+    <p class="level is-justify-content-center">Select the folder you would like to organize</p>
     <div>
-      <input id="files" type="file" webkitdirectory directory multiple>
-      <button id="submit-organizer" >click</button>
+      <div class="file level is-justify-content-center">
+        <label class="file-label">
+          <input id="files" class="file-input" type="file" webkitdirectory directory multiple>
+          <span class="file-cta">
+            <span class="file-label">
+              Choose files
+            </span>
+          </span>
+        </label>
+      </div>
+      <button id="submit-organizer" class="button is-primary" >Submit</button>
     </div>
     <script src="renderer.js"></script>
   </body>
