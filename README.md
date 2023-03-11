@@ -8,7 +8,10 @@ Organize your files by date (years, months and weeks folders).
 To get started with File Organizer, follow these simple steps:
 
 Download and install File Organizer on your computer
-Launch the application and select the folders you want to organize
+Run npm install
+Run npm start
+Select the folder containing the files you want to organize
+Submit and the files will ne ordered by date into a new folder on desktop
 
 Enjoy a clutter-free and organized file system on your computer!
 
