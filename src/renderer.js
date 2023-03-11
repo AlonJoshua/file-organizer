@@ -31,6 +31,9 @@ function createDir() {
 
     copyFile(file, weekFolderPath);
   }
+
+  const successMessage = document.querySelector('.success-message');
+  successMessage.classList.remove('is-invisible');
 }
 
 function createFolderIfNotExists(folderPath) {
