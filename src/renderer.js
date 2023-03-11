@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function createDir() {
   const filesInput = document.getElementById('files');
-  const mainFolderPath = '/users/alonjoshua/desktop/image-organizer';
+  const mainFolderPath = '/users/alonjoshua/desktop/file-organizer';
   
   try {
     if (!fs.existsSync(mainFolderPath)) {
