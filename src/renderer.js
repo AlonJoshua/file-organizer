@@ -1,42 +1,58 @@
 const fs = window.myAPI.fs;
 
 document.addEventListener('DOMContentLoaded', () => {
-    const submitOrganizer = document.getElementById('submit-organizer');
-    submitOrganizer.addEventListener('click', createDir);
-})
+  const submitOrganizer = document.getElementById('submit-organizer');
+  submitOrganizer.addEventListener('click', createDir);
+});
 
 function createDir() {
-    const filesInput = document.getElementById('files')
-    const mainFolderPath = '/users/alonjoshua/desktop/image-organizer';
-    try {
-        if (!fs.existsSync(mainFolderPath)) {
-            fs.mkdirSync(mainFolderPath);
-        }
-    } catch (err) {
-        console.error(err);
+  const filesInput = document.getElementById('files');
+  const mainFolderPath = '/users/alonjoshua/desktop/image-organizer';
+  
+  try {
+    if (!fs.existsSync(mainFolderPath)) {
+      fs.mkdirSync(mainFolderPath);
     }
-    [...filesInput.files].forEach(file => {
-        const fileDate = new Date(fs.statSync(file.path).birthtimeMs);
-        const yearFolderPath = `${mainFolderPath}/${fileDate.getFullYear()}`;
-        if (!fs.existsSync(yearFolderPath)) {
-            fs.mkdirSync(yearFolderPath);
-        }
-        const monthFolderPath = `${yearFolderPath}/${fileDate.toLocaleString('default', { month: 'long' })}`;
-        if (!fs.existsSync(monthFolderPath)) {
-            fs.mkdirSync(monthFolderPath);
-        }
-        const weekFolderPath = `${monthFolderPath}/week ${Math.ceil((fileDate.getDate()) / 7)}`;
-        if (!fs.existsSync(weekFolderPath)) {
-            fs.mkdirSync(weekFolderPath);
-        }
+  } catch (err) {
+    console.error(err);
+    return;
+  }
 
-        try {
-            fs.copyFile(file.path, `${weekFolderPath}/${file.name}`, (error) => {
-               console.log(error); 
-            })
-            console.log('success!')
-        } catch (err) {
-            console.error(err)
-        }
+  for (const file of filesInput.files) {
+    const fileDate = new Date(fs.statSync(file.path).birthtimeMs);
+    const yearFolderPath = `${mainFolderPath}/${fileDate.getFullYear()}`;
+    createFolderIfNotExists(yearFolderPath);
+    
+    const monthFolderPath = `${yearFolderPath}/${fileDate.toLocaleString('default', { month: 'long' })}`;
+    createFolderIfNotExists(monthFolderPath);
+
+    const weekFolderPath = `${monthFolderPath}/week ${Math.ceil(fileDate.getDate() / 7)}`;
+    createFolderIfNotExists(weekFolderPath);
+
+    copyFile(file, weekFolderPath);
+  }
+}
+
+function createFolderIfNotExists(folderPath) {
+  if (!fs.existsSync(folderPath)) {
+    fs.mkdirSync(folderPath);
+  }
+}
+
+function copyFile(file, folderPath) {
+  const fileName = file.name;
+  const filePath = file.path;
+  const targetPath = `${folderPath}/${fileName}`;
+
+  try {
+    fs.copyFile(filePath, targetPath, (error) => {
+      if (error) {
+        console.error(error);
+        return;
+      }
+      console.log(`File ${fileName} was copied to ${targetPath}`);
     });
+  } catch (err) {
+    console.error(err);
+  }
 }
